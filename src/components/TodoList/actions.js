@@ -4,8 +4,9 @@ export const CREATE_TODO = 'CREATE_TODO'
 export const DELETE_TODO = 'DELETE_TODO'
 export const TOGGLE_TODO_DONE = 'TOGGLE_TODO_DONE'
 
+// Helpers to enhance the payload of actions
 const withDate = key => () => ({
-  updatedAt: Date.now()
+  [key]: Date.now()
 })
 const withUpdatedAt = withDate('updatedAt')
 
