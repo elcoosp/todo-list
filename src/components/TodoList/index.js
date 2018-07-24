@@ -28,6 +28,8 @@ TodoList.propTypes = {
 
 export default withRouter(
   connect(state => ({
-    todos: Object.values(state.todos)
+    todos: Object.values(state.todos).sort(
+      (a, b) => (a.createdAt > b.createdAt ? 0 : 1)
+    )
   }))(TodoList)
 )
