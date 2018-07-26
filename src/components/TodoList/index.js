@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { mapToComp } from '../../utils'
 import TodoItem from './TodoItem'
 import TodoForm from './TodoForm'
-import Button from 'antd/lib/button'
+import { Button } from 'antd'
 import Confetti from 'react-dom-confetti'
 import { withState, compose } from 'recompose'
 

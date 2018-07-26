@@ -11,6 +11,8 @@ export const makeAction = (type, ...payloadEnhancers) => payload => ({
   }
 })
 
+export const lengthMoreThan = (n, x) => x.length > n
+
 export const withFuncForKey = (key, func) => () => ({
   [key]: func()
 })

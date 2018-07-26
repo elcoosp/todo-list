@@ -1,22 +1,12 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import P from 'prop-types'
 import { withRouter } from 'react-router-dom'
-
+import { Input, Button } from 'antd'
 import { connect } from 'react-redux'
+import LabelledInputWithError from './LabelledInputWithError'
 import { actionCreators as A } from './actions'
-const lengthMoreThan = (n, x) => x.length > n
-const LabelledInputWithError = ({ label, error, ...props }) => (
-  <Fragment>
-    <label htmlFor={label.toLowerCase()}>{label}</label>
-    <input type="text" name={label.toLowerCase()} {...props} />
-    {lengthMoreThan(0, error) && <span>{error}</span>}
-  </Fragment>
-)
+import { lengthMoreThan } from '../../utils'
 
-LabelledInputWithError.propTypes = {
-  label: P.string,
-  error: P.string
-}
 class TodoForm extends React.Component {
   state = {
     errors: {
@@ -26,11 +16,13 @@ class TodoForm extends React.Component {
     },
     values: { ...this.props.values }
   }
+
   setErrors = newErrors =>
     this.setState(s => ({
       ...s,
       errors: { ...s.errors, ...newErrors }
     }))
+
   validate = () => {
     const errors = {}
     const {
@@ -47,6 +39,7 @@ class TodoForm extends React.Component {
 
     this.setErrors(errors)
   }
+
   onChange = ({ target: { name, value } }) => {
     this.setState(s => ({
       ...s,
@@ -57,27 +50,32 @@ class TodoForm extends React.Component {
   }
 
   hasNoErrors = () => Object.values(this.state.errors).every(x => x === '')
+
   onSubmit = e => {
+    console.log(e)
     e.preventDefault()
     if (this.hasNoErrors()) {
       this.props.createTodo(this.state.values)
       this.props.history.push('/todos')
     }
   }
+
   render () {
     return (
       <form onSubmit={this.onSubmit}>
         <LabelledInputWithError
+          component={Input}
           label="Title"
           onChange={this.onChange}
           error={this.state.errors.title}
         />
         <LabelledInputWithError
           label="Body"
+          component={Input.TextArea}
           onChange={this.onChange}
           error={this.state.errors.body}
         />
-        <button>Add a todo</button>
+        <Button onClick={this.onSubmit} type="submit">Add a todo</Button>
       </form>
     )
   }
