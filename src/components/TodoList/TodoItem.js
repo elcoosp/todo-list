@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import { actionCreators as A } from './actions'
 import P from 'prop-types'
+import { Card } from 'antd'
+import { actionCreators as A } from './actions'
 
 const Tag = ({ children }) => <p>#{children}</p>
 Tag.propTypes = {
@@ -9,18 +10,28 @@ Tag.propTypes = {
 }
 
 const TodoItem = ({ done, title, body, tags, toggleTodoDone, id }) => (
-  <div>
-    <h3>{title}</h3>
-    <h4>Notes: {body}</h4>
-    <input
-      type="checkbox"
-      name="isTodoDone"
-      checked={done}
-      onChange={() => toggleTodoDone(id)}
-    />
-    <p>{body}</p>
+  <Card
+    title={title}
+    extra={
+      <input
+        type="checkbox"
+        name="isTodoDone"
+        checked={done}
+        onChange={() => toggleTodoDone(id)}
+      />
+    }
+  >
+    {body ? (
+      <Fragment>
+        <h4>Notes:</h4>
+        <p>{body}</p>
+      </Fragment>
+    ) : (
+      <h4>No notes</h4>
+    )}
+
     {tags.map(t => <Tag key={t}>{t}</Tag>)}
-  </div>
+  </Card>
 )
 TodoItem.propTypes = {
   done: P.bool.isRequired,
